@@ -29,12 +29,10 @@ class FaceDetection:
                     # get image frame by frame
                     _, frame = capture.read()
 
-                    print('before showing')
-
                     # DEBUG only: Show captured video frame by frame
-                    cv2.imshow('Debug', frame)
+                    cv2.imshow('Debug, Press Q to quit', frame)
 
-                    if cv2.waitKey(1):
+                    if cv2.waitKey(1) == ord('q'):
                         break
 
                 capture.release()
