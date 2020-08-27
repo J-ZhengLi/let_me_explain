@@ -1,4 +1,5 @@
 import cv2
+from play_media import PlayMedia
 #import time
 from threading import Timer
 from enum import Enum
@@ -28,6 +29,8 @@ class FaceDetection:
             # check if theres a camera attached
             if capture != None and capture.isOpened():
                 frame_skip = 0
+                playing = False
+                pm = PlayMedia()
                 while(True):
                     # get image frame by frame
                     _, frame = capture.read()
@@ -43,12 +46,15 @@ class FaceDetection:
                         self.faces = cascade.detectMultiScale(g_frame, self.factor)
                         # End face detection
 
+                    if len(self.faces) > 1:
+                        if not playing:
+                            pm.playVideoFromFile()
+                            playing = True
+                    else:
+                        playing = False
+
                     # DEBUG only: Show captured video frame by frame
                     # mark detected faces on debug output
-                    if len(self.faces) > 1:
-                        t = Timer(2, self.test)
-                        t.start()
-
                     for (centerX, centerY, width, height) in self.faces:
                         cv2.circle(frame, (centerX + int(width/2), centerY + int(height/2)), width, (0, 0, 255))
                     cv2.imshow('Debuging, Press Q to quit', frame)
@@ -59,6 +65,6 @@ class FaceDetection:
                 cv2.destroyAllWindows()
             else:
                 print('Cannot find a working webcam')
-                
+
     def test(self):
-        print('it is time')
+        print('hello')
