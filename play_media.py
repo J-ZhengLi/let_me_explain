@@ -3,7 +3,7 @@ from ffpyplayer.player import MediaPlayer
 
 class PlayMedia:
 
-    def playVideoFromFile(self, fileName='rick_trim.mp4'):
+    def playVideoFromFile(self, fileName='data/rick'):
             # load video file
             video = cv2.VideoCapture(fileName)
             # calculate delay base on the video's frame rate
