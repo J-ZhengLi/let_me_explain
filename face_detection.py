@@ -1,7 +1,5 @@
 import cv2
 from play_media import PlayMedia
-#import time
-from threading import Timer
 from enum import Enum
 
 class MediaType(Enum):
@@ -29,6 +27,7 @@ class FaceDetection:
             # check if theres a camera attached
             if capture != None and capture.isOpened():
                 frame_skip = 0
+                timer = 0
                 playing = False
                 pm = PlayMedia()
                 while(True):
@@ -47,11 +46,12 @@ class FaceDetection:
                         # End face detection
 
                     if len(self.faces) > 1:
-                        if not playing:
+                        timer += 1
+                        if timer == 15:
                             pm.playVideoFromFile()
-                            playing = True
                     else:
-                        playing = False
+                        # reset timer
+                        timer = 0
 
                     # DEBUG only: Show captured video frame by frame
                     # mark detected faces on debug output
