@@ -48,7 +48,7 @@ class FaceDetection:
                     if len(self.faces) > 1:
                         timer += 1
                         if timer == 15:
-                            pm.playVideoFromFile()
+                            pm.playRandomVideoFromFolder()
                     else:
                         # reset timer
                         timer = 0

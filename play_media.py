@@ -1,9 +1,24 @@
 import cv2
+from random import choice
+from os import walk
+from os.path import join
 from ffpyplayer.player import MediaPlayer
 
 class PlayMedia:
+    
+    def playRandomVideoFromFolder(self, folderPath='data'):
+        fn_list = []
 
-    def playVideoFromFile(self, fileName='data/rick'):
+        # get a list of filenames from the folder
+        (_, _, filenames) = next(walk(folderPath))
+        for f in filenames:
+            # get the path of each file
+            fn_list.append(join(folderPath, f))
+        
+        # Choose a random file to play
+        self.playVideoFromFile(choice(fn_list), True)
+
+    def playVideoFromFile(self, fileName='data/rick', fullscreen=False):
             # load video file
             video = cv2.VideoCapture(fileName)
             # calculate delay base on the video's frame rate
@@ -18,9 +33,9 @@ class PlayMedia:
                 audio.get_frame()
                 # If still have frame to retrive
                 if ret:
-                    # show output in fullscreen
-                    #cv2.namedWindow('output', cv2.WND_PROP_FULLSCREEN)
-                    #cv2.setWindowProperty('output', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+                    if fullscreen:
+                        cv2.namedWindow('output', cv2.WND_PROP_FULLSCREEN)
+                        cv2.setWindowProperty('output', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
                     cv2.imshow('output', frame)
 
                     if cv2.waitKey(delay) == ord('q'):
@@ -30,3 +45,7 @@ class PlayMedia:
 
             video.release()
             cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    pm = PlayMedia()
+    pm.playRandomVideoFromFolder()
