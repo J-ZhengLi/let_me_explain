@@ -28,8 +28,7 @@ class FaceDetection:
             if capture != None and capture.isOpened():
                 frame_skip = 0
                 timer = 0
-                playing = False
-                pm = PlayMedia()
+                pm = PlayMedia(50)
                 while(True):
                     # get image frame by frame
                     _, frame = capture.read()
@@ -47,7 +46,7 @@ class FaceDetection:
 
                     if len(self.faces) > 1:
                         timer += 1
-                        if timer == 15:
+                        if timer == 10:
                             pm.playRandomVideoFromFolder()
                     else:
                         # reset timer
