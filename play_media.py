@@ -15,6 +15,10 @@ class PlayMedia:
                 print('isLinux')
                 system('amixer set Master unmute')
                 system('amixer set Master ' + str(volume) + '%')
+            elif platform.system() == 'Windows':
+                pass
+            elif platform.system() == 'Darwin':
+                pass
     
     def playRandomVideoFromFolder(self, folderPath='data'):
         fn_list = []
@@ -27,7 +31,7 @@ class PlayMedia:
             fn_list.append(join(folderPath, f))
         
         # Choose a random file to play
-        self.playVideoFromFile(choice(fn_list), False)
+        self.playVideoFromFile(choice(fn_list), True)
 
     def playVideoFromFile(self, fileName='data/rick', fullscreen=False):
             # load video file
